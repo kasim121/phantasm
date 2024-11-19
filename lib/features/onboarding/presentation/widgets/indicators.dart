@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
-import '../../../../confi/themes/app_colors.dart';
+import 'package:phantasm/confi/themes/app_colors.dart';
 
 class Indicators extends StatelessWidget {
-  const Indicators({Key? key}) : super(key: key);
+  final int currentPage;
+  final int totalPages;
+
+  const Indicators({
+    Key? key,
+    required this.currentPage,
+    required this.totalPages,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildIndicator(true),
-        const SizedBox(width: 8),
-        _buildIndicator(false),
-        const SizedBox(width: 8),
-        _buildIndicator(false),
-      ],
+      children: List.generate(totalPages, (index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+          child: _buildIndicator(index == currentPage),
+        );
+      }),
     );
   }
 

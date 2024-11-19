@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../../confi/themes/app_colors.dart';
 
 class Ellipses extends StatelessWidget {
-  const Ellipses({Key? key}) : super(key: key);
+  final int currentPage;
+  const Ellipses({Key? key, required this.currentPage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
