@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'confi/routes/app_routes.dart';
+import 'features/login/presentation/providers/login_provider.dart';
 import 'features/onboarding/data/repositories/onboarding_repository.dart';
 import 'features/onboarding/domain/usecase/get_onboarding_data_usecase.dart';
 import 'features/onboarding/presentation/providers/onbarding_provider.dart';
-import 'features/onboarding/presentation/screen/onbarding_started_screen.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -20,6 +20,11 @@ class MyApp extends StatelessWidget {
             return OnboardingProvider(getOnboardingSteps);
           },
         ),
+        ChangeNotifierProvider(
+          create: (context) {
+            return LoginProvider();
+          },
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -27,12 +32,9 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        // Define routes for navigation
+        debugShowCheckedModeBanner: false,
         initialRoute: '/onboarding',
-        routes: {
-          '/onboarding': (context) => const OnboardingScreen(),
-          //'/home': (context) => const HomeScreen(), // Example: A home screen
-        },
+        routes: AppRoutes.getRoutes(context),
       ),
     );
   }

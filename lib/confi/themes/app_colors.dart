@@ -9,4 +9,6 @@ class AppColors {
   static const Color grayShade = Color(0xFF707B81); // New gray shade
   static const Color customBlue = Color(0xFF5B9EE1);
   static const Color customLightBlue = Color(0xFFE5EEF7); // Light blue color
+  static const Color darkBackground = Color(0xFF161F28);
+  static const Color customblue = Color(0xFF5B9EE1); // Hex to Color
 }

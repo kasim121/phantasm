@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../../confi/themes/app_colors.dart';
 
 class Ellipses extends StatelessWidget {
-  final int currentPage;
-  const Ellipses({Key? key, required this.currentPage}) : super(key: key);
+  final int? currentPage;
+  const Ellipses({Key? key, this.currentPage = 0}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,9 @@ class Ellipses extends StatelessWidget {
           ),
         ),
         Positioned(
-          top: MediaQuery.of(context).size.height * (300 / 800),
+          top: currentPage == 0
+              ? MediaQuery.of(context).size.height * (300 / 800)
+              : MediaQuery.of(context).size.height * (350 / 800),
           right: MediaQuery.of(context).size.width * (50 / 411),
           child: Container(
             width: MediaQuery.of(context).size.width * (13 / 411),

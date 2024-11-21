@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../../../../confi/themes/app_colors.dart';
 import '../../../../confi/themes/app_text_style.dart';
 import '../providers/onbarding_provider.dart';
-import '../widgets/custome_button.dart';
+import '../widgets/custome_onboarding_button.dart';
 import '../widgets/ellipses.dart';
 import '../widgets/indicators.dart';
 
@@ -53,7 +53,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 65.0, top: 105),
+                      padding: _currentPage == 0
+                          ? const EdgeInsets.only(left: 65.0, top: 105)
+                          : const EdgeInsets.only(
+                              left: 65.0,
+                              top: 90,
+                            ),
                       child: Image.asset(
                         step.imagePath,
                         width: MediaQuery.of(context).size.width * 0.8,
@@ -75,25 +80,45 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         textAlign: TextAlign.start,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: FittedBox(
-                          child: Text(
-                            step.description.formatDescription(),
-                            style: AppTextStyles.airbnbCerealText(
-                              color: AppColors.grayShade,
-                              fontWeight: FontWeight.w400,
-                              fontSize: 20,
-                            ),
-                            textAlign: TextAlign.start,
+                    _currentPage == 0
+                        ? Padding(
+                            padding:
+                                const EdgeInsets.only(left: 40.0, right: 40),
+                            child: SizedBox(
+                                width: double.infinity,
+                                child: FittedBox(
+                                  child: Text(
+                                    step.description.formatDescription(
+                                        targetWord: "Fashionable"),
+                                    style: AppTextStyles.airbnbCerealText(
+                                      color: AppColors.grayShade,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 20,
+                                    ),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                )),
+                          )
+                        : Padding(
+                            padding:
+                                const EdgeInsets.only(left: 40.0, right: 40),
+                            child: SizedBox(
+                                width: double.infinity,
+                                child: FittedBox(
+                                  child: Text(
+                                    step.description
+                                        .formatDescription(targetWord: 'And'),
+                                    style: AppTextStyles.airbnbCerealText(
+                                      color: AppColors.grayShade,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 20,
+                                    ),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                )),
                           ),
-                        ),
-                      ),
-                    ),
                     const SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 40.0),
@@ -102,12 +127,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         children: [
                           Indicators(
                             currentPage: _currentPage,
-                            totalPages: onboardingProvider.steps.length,
+                            totalPages: onboardingProvider.steps.length + 1,
                           ),
                           const SizedBox(height: 20),
                           CustomElevatedButton(
-                            text: 'Get Started',
-                            onPressed: () {},
+                            text: _currentPage == 0 ? 'Get Started' : 'Next',
+                            onPressed: () {
+                              if (_currentPage == 1) {
+                                Navigator.pushNamed(context, '/login');
+                              } else if (_currentPage == 0) {
+                                Navigator.pushNamed(context, '/login');
+                              } else {
+                                _pageController.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeInOut,
+                                );
+                              }
+                            },
                             backgroundColor: AppColors.customBlue,
                             textColor: AppColors.textPrimary,
                             fontSize: 18,
